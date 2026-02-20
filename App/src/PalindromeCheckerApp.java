@@ -4,9 +4,7 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        String word = "madam";
 
         String reverse = "";
 
@@ -15,11 +13,8 @@ public class PalindromeCheckerApp {
         }
 
         if (word.equalsIgnoreCase(reverse)) {
-            System.out.println("Palindrome");
+            System.out.println(word + " is Palindrome");
         } else {
-            System.out.println("Not Palindrome");
+            System.out.println(word + " is Not Palindrome");
         }
-
-        sc.close();
     }
-}
