@@ -6,8 +6,9 @@ public class PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("1. Check User Input Palindrome");
-        System.out.println("2. Check Hardcoded Palindrome");
+        System.out.println("1. User Input Palindrome");
+        System.out.println("2. Hardcoded Palindrome");
+        System.out.println("3. Palindrome Using String Reverse (Loop)");
         System.out.print("Enter choice: ");
 
         int choice = sc.nextInt();
@@ -15,17 +16,21 @@ public class PalindromeCheckerApp {
 
         if (choice == 1) {
 
-            // Use Case 1
             System.out.print("Enter a word: ");
             String word = sc.nextLine();
             checkPalindrome(word);
 
         } else if (choice == 2) {
 
-            // Use Case 2
             String hardcodedWord = "madam";
             System.out.println("Hardcoded word: " + hardcodedWord);
             checkPalindrome(hardcodedWord);
+
+        } else if (choice == 3) {
+
+            System.out.print("Enter a word: ");
+            String word = sc.nextLine();
+            palindromeUsingReverse(word);
 
         } else {
             System.out.println("Invalid choice");
@@ -34,6 +39,7 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
+    // Common palindrome check (UC1 & UC2)
     public static void checkPalindrome(String word) {
 
         String reverse = "";
@@ -46,5 +52,23 @@ public class PalindromeCheckerApp {
             System.out.println("Palindrome");
         else
             System.out.println("Not Palindrome");
+    }
+
+    // UC3 - Explicit Reverse Logic Explanation Version
+    public static void palindromeUsingReverse(String word) {
+
+        String reversed = "";
+
+        // Reverse string using loop
+        for (int i = word.length() - 1; i >= 0; i--) {
+            reversed = reversed + word.charAt(i);
+        }
+
+        // Compare original and reversed
+        if (word.equals(reversed)) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not Palindrome");
+        }
     }
 }
