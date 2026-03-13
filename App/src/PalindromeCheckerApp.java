@@ -8,24 +8,22 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a word: ");
         String input = sc.nextLine();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Enqueue and Push characters
+        // Insert characters into deque
         for (char ch : input.toCharArray()) {
-            queue.add(ch);     // Enqueue (FIFO)
-            stack.push(ch);    // Push (LIFO)
+            deque.addLast(ch);
         }
 
         boolean isPalindrome = true;
 
-        // Compare Dequeue and Pop
-        while (!queue.isEmpty()) {
+        // Compare front and rear
+        while (deque.size() > 1) {
 
-            char qChar = queue.remove();  // Dequeue
-            char sChar = stack.pop();     // Pop
+            char first = deque.removeFirst();
+            char last = deque.removeLast();
 
-            if (qChar != sChar) {
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
