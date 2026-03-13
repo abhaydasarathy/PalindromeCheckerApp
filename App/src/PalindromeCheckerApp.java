@@ -1,8 +1,63 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
 import java.util.Scanner;
 
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
 public class PalindromeCheckerApp {
+
+    // Reverse linked list
+    static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Check palindrome
+    static boolean isPalindrome(Node head) {
+
+        if (head == null || head.next == null)
+            return true;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node secondHalf = reverse(slow.next);
+
+        Node firstHalf = head;
+
+        // Compare halves
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data)
+                return false;
+
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
@@ -10,33 +65,20 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a word: ");
         String input = sc.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<>();
+        // Convert string to linked list
+        Node head = new Node(input.charAt(0));
+        Node current = head;
 
-        // Insert characters into deque
-        for (char ch : input.toCharArray()) {
-            deque.addLast(ch);
+        for (int i = 1; i < input.length(); i++) {
+            current.next = new Node(input.charAt(i));
+            current = current.next;
         }
 
-        boolean isPalindrome = true;
-
-        // Compare front and rear
-        while (deque.size() > 1) {
-
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-
-            if (first != last) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Display result
-        if (isPalindrome) {
+        // Check palindrome
+        if (isPalindrome(head))
             System.out.println("The word is a Palindrome.");
-        } else {
+        else
             System.out.println("The word is NOT a Palindrome.");
-        }
 
         sc.close();
     }
