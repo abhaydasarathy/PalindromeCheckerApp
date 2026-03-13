@@ -1,5 +1,4 @@
-import java.util.Stack;
-import java.util.Scanner;
+import java.util.*;
 
 public class PalindromeCheckerApp {
 
@@ -9,26 +8,34 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a word: ");
         String input = sc.nextLine();
 
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Enqueue and Push characters
         for (char ch : input.toCharArray()) {
-            stack.push(ch);
+            queue.add(ch);     // Enqueue (FIFO)
+            stack.push(ch);    // Push (LIFO)
         }
 
-        String reversed = "";
+        boolean isPalindrome = true;
 
-        // Pop characters to reverse string
-        while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
+        // Compare Dequeue and Pop
+        while (!queue.isEmpty()) {
+
+            char qChar = queue.remove();  // Dequeue
+            char sChar = stack.pop();     // Pop
+
+            if (qChar != sChar) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Compare original and reversed string
-        if (input.equals(reversed)) {
-            System.out.println("Palindrome");
-        } else {
-            System.out.println("Not a Palindrome");
-        }
+        // Print result
+        if (isPalindrome)
+            System.out.println("The word is a Palindrome.");
+        else
+            System.out.println("The word is NOT a Palindrome.");
 
         sc.close();
     }
