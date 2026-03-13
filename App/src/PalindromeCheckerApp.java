@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
@@ -29,11 +31,12 @@ public class PalindromeCheckerApp {
             }
         }
 
-        // Print result
-        if (isPalindrome)
+        // Display result
+        if (isPalindrome) {
             System.out.println("The word is a Palindrome.");
-        else
+        } else {
             System.out.println("The word is NOT a Palindrome.");
+        }
 
         sc.close();
     }
