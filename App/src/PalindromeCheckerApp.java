@@ -1,8 +1,16 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
 
 public class PalindromeCheckerApp {
+
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -11,38 +19,71 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a word: ");
         String word = sc.nextLine();
 
-        checkPalindromeUsingDeque(word);
+        Node head = createLinkedList(word);
+
+        if (isPalindrome(head))
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not Palindrome");
 
         sc.close();
     }
 
-    // UC7 - Deque Based Palindrome Checker
-    public static void checkPalindromeUsingDeque(String word) {
+    // Convert string to linked list
+    public static Node createLinkedList(String word) {
 
-        Deque<Character> deque = new ArrayDeque<>();
+        Node head = null, tail = null;
 
-        // Insert characters into deque
         for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
-        }
 
-        boolean isPalindrome = true;
+            Node newNode = new Node(word.charAt(i));
 
-        // Compare front and rear
-        while (deque.size() > 1) {
-
-            char first = deque.removeFirst();
-            char last = deque.removeLast();
-
-            if (first != last) {
-                isPalindrome = false;
-                break;
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
             }
         }
 
-        if (isPalindrome)
-            System.out.println("Palindrome");
-        else
-            System.out.println("Not Palindrome");
+        return head;
     }
-}git checkout main
+
+    // Check palindrome using linked list
+    public static boolean isPalindrome(Node head) {
+
+        Node slow = head;
+        Node fast = head;
+
+        // Find middle of list
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        Node prev = null;
+        while (slow != null) {
+            Node next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+
+        // Compare halves
+        Node first = head;
+        Node second = prev;
+
+        while (second != null) {
+
+            if (first.data != second.data)
+                return false;
+
+            first = first.next;
+            second = second.next;
+        }
+
+        return true;
+    }
+}
