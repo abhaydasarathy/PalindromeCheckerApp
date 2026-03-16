@@ -6,10 +6,10 @@ public class PalindromeCheckerApp {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        System.out.print("Enter a sentence: ");
+        String input = sc.nextLine();
 
-        if (isPalindrome(word, 0, word.length() - 1))
+        if (isPalindrome(input))
             System.out.println("Palindrome");
         else
             System.out.println("Not Palindrome");
@@ -17,18 +17,25 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
-    // UC9 - Recursive Palindrome Checker
-    public static boolean isPalindrome(String word, int start, int end) {
+    // UC10 - Ignore spaces and case
+    public static boolean isPalindrome(String str) {
 
-        // Base condition
-        if (start >= end)
-            return true;
+        // Normalize string
+        str = str.toLowerCase().replaceAll("\\s+", "");
 
-        // If characters don't match
-        if (word.charAt(start) != word.charAt(end))
-            return false;
+        int left = 0;
+        int right = str.length() - 1;
 
-        // Recursive call
-        return isPalindrome(word, start + 1, end - 1);
+        // Two pointer comparison
+        while (left < right) {
+
+            if (str.charAt(left) != str.charAt(right))
+                return false;
+
+            left++;
+            right--;
+        }
+
+        return true;
     }
 }
