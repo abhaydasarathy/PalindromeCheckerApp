@@ -2,16 +2,6 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
 
-    static class Node {
-        char data;
-        Node next;
-
-        Node(char data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -19,9 +9,7 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a word: ");
         String word = sc.nextLine();
 
-        Node head = createLinkedList(word);
-
-        if (isPalindrome(head))
+        if (isPalindrome(word, 0, word.length() - 1))
             System.out.println("Palindrome");
         else
             System.out.println("Not Palindrome");
@@ -29,61 +17,18 @@ public class PalindromeCheckerApp {
         sc.close();
     }
 
-    // Convert string to linked list
-    public static Node createLinkedList(String word) {
+    // UC9 - Recursive Palindrome Checker
+    public static boolean isPalindrome(String word, int start, int end) {
 
-        Node head = null, tail = null;
+        // Base condition
+        if (start >= end)
+            return true;
 
-        for (int i = 0; i < word.length(); i++) {
+        // If characters don't match
+        if (word.charAt(start) != word.charAt(end))
+            return false;
 
-            Node newNode = new Node(word.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-
-        return head;
-    }
-
-    // Check palindrome using linked list
-    public static boolean isPalindrome(Node head) {
-
-        Node slow = head;
-        Node fast = head;
-
-        // Find middle of list
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node prev = null;
-        while (slow != null) {
-            Node next = slow.next;
-            slow.next = prev;
-            prev = slow;
-            slow = next;
-        }
-
-        // Compare halves
-        Node first = head;
-        Node second = prev;
-
-        while (second != null) {
-
-            if (first.data != second.data)
-                return false;
-
-            first = first.next;
-            second = second.next;
-        }
-
-        return true;
+        // Recursive call
+        return isPalindrome(word, start + 1, end - 1);
     }
 }
